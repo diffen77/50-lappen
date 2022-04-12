@@ -17,7 +17,7 @@ jobs:
       run: docker build . --file Dockerfile --tag 50-lappen:$(date +%s)
     - name: Push docker image to registry
       run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} && docker push diffen/50-lappen:$(date +%s)
+        docker login -u diffen -p ${{ secrets.DOCKER_PASSWORD }} && docker push diffen/50-lappen:$(date +%s)
 
 
 

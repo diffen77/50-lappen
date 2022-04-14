@@ -1,10 +1,9 @@
 FROM python:3.9
 
-WORKDIR /docker-coupon
+WORKDIR /coupon
 
-ADD . /docker-coupon/
+ADD /coupon /coupon/
 
 RUN pip3 install -r requirements.txt
 
 CMD ["python", "data.py" ]
-

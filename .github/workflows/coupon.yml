@@ -1,4 +1,4 @@
-name: Coupon Docker
+name: Coupon Creator
 
 on:
   push:

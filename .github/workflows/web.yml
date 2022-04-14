@@ -1,4 +1,4 @@
-name: Web interface
+name: Web Interface
 
 on:
   push:

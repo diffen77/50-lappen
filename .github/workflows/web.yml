@@ -17,7 +17,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: Build & push Docker image
         with:
-          image: diffen77/50-lappen
+          image: diffen/50-lappen
           dockerfile: web/Dockerfile
           tags: latest
           registry: docker.io

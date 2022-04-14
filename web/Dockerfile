@@ -2,7 +2,7 @@ FROM python:3.9
 
 WORKDIR /web
 
-COPY . .
+ADD /web /web/
 
 RUN pip3 install -r web/requirements.txt
 

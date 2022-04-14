@@ -26,7 +26,6 @@ couponId = jsonData['draws_0_drawNumber']
 regCloseTime = jsonData['draws_0_regCloseTime']
 
 
-
 print("Kupong ID: " + str(couponId) + ", Spelstopp: " + str(regCloseTime))
 while i < 13:
     homeTeam = 'draws_0_drawEvents_' + str(i) + '_match_participants_0_name'

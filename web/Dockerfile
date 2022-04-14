@@ -1,8 +1,8 @@
 FROM python:3.9
 
-WORKDIR /docker-flask-app
+WORKDIR /web
 
-ADD . /docker-flask-app/
+ADD . /web/
 
 RUN pip3 install -r web/requirements.txt
 

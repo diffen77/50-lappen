@@ -51,4 +51,5 @@ while i < 13:
     matchNumber += 1
     i += 1
 
-    #kul
+    #if __name__ == '__main__':
+    #    app.run()

@@ -1,8 +1,8 @@
 FROM python:3.9
 
-WORKDIR /web
+WORKDIR /app
 
-ADD . /web/
+ADD . /app/
 
 RUN pip3 install -r web/requirements.txt
 

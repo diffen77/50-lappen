@@ -3,6 +3,9 @@ name: 50-lappen_web_docker
 on:
   push:
     branches: [ master ]
+    
+    paths:
+      - diffen77/50-lappen/web
 
 jobs:
   build-push:

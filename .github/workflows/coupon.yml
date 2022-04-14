@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     
     paths:
-      - 50-lappen/coupon/**
+      - coupon/**
 
 jobs:
   build-push:

@@ -17,7 +17,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: Build & push Docker image
         with:
-          image: web/50-lappen
+          image: diffen77/50-lappen/web
           tags: latest
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}

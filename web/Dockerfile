@@ -4,7 +4,7 @@ WORKDIR /web
 
 ADD /web /web/
 
-RUN pip3 install -r web/requirements.txt
+RUN pip3 install -r requirements.txt
 
 EXPOSE 5000
 

@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     
     paths:
-      - diffen77/50-lappen/web
+      - diffen77/50-lappen/web/**
 
 jobs:
   build-push:

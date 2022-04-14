@@ -1,4 +1,4 @@
-name: 50-lappen_web_docker
+name: Web interface
 
 on:
   push:

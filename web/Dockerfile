@@ -4,7 +4,7 @@ WORKDIR /docker-flask-app
 
 ADD . /docker-flask-app/
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r web/requirements.txt
 
 EXPOSE 5000
 

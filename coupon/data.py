@@ -6,9 +6,9 @@ import json, psycopg2, os
 from xmlrpc.client import DateTime
 from database_schema import database_schema_setup
 from flatten_json import flatten
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
-config = SafeConfigParser(os.environ)
+config = ConfigParser(os.environ)
 config.read('coupon/config.ini')
 
 #Create database schema in PostGress

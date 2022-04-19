@@ -22,11 +22,11 @@ database_schema_setup()
 
 
 conn = psycopg2.connect(
-    dbname = coupon_config['POSTGRES']['dbname'],
-    user = coupon_config['POSTGRES']['user'],
-    password = coupon_config['POSTGRES']['password'],
-    host = coupon_config["POSTGRES"]["host"],
-    port = coupon_config['POSTGRES']['port']
+    host = os.getenv(COUPON_HOST),
+    dbname = os.getenv(COUPON_DB_NAME),
+    user = os.getenv(COUPON_DB_USER),
+    password = os.getenv(COUPON_DB_PASSWORD),
+    port = os.getenv(COUPON_DB_PORT)
 )
 
 

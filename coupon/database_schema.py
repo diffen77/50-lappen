@@ -2,6 +2,9 @@
 from venv import create
 import psycopg2, os
 from configparser import ConfigParser
+from dotenv import load_dotenv
+
+load_dotenv()
 
 config_file = os.path.join(os.path.dirname(__file__), 'config.ini')
 print(config_file)
@@ -19,13 +22,13 @@ def database_schema_setup():
 
     try:
         conn = psycopg2.connect(
-            host = coupon_config['POSTGRES']['host'],
-            dbname = coupon_config['POSTGRES']['dbname'],
-            user = coupon_config['POSTGRES']['user'],
-            password = coupon_config['POSTGRES']['password'],
-            port = coupon_config['POSTGRES']['port']
-        
+            host = os.getenv(COUPON_HOST),
+            dbname = os.getenv(COUPON_DB_NAME),
+            user = os.getenv(COUPON_DB_USER),
+            password = os.getenv(COUPON_DB_PASSWORD),
+            port = os.getenv(COUPON_DB_PORT)
         )
+
 
         cur = conn.cursor()
 

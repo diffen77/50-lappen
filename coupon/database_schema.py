@@ -14,17 +14,13 @@ def database_schema_setup():
 
     try:
         conn = psycopg2.connect(
-            host = "coupon-database",
-            dbname = "exampledb",
-            user = "gunnar",
-            password = "gunnar",
-            port = 5432
 
-#            host = config['postgres']['hostname'],
-#            dbname = config['postgres']['database'],
-#            user = config['postgres']['username'],
-#            password = config['postgres']['password'],
-#            port = config['postgres']['port']
+
+            host = config['postgres']['host'],
+            dbname = config['postgres']['dbname'],
+            user = config['postgres']['user'],
+            password = config['postgres']['password'],
+            port = config['postgres']['port']
         
         )
 

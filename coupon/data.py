@@ -11,7 +11,7 @@ from flatten_json import flatten
 from configparser import ConfigParser
 
 config = ConfigParser(os.environ)
-config.read('coupon/config.ini')
+config.read('config.ini')
 
 #Create database schema in PostGress
 database_schema_setup()

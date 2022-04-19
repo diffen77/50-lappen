@@ -3,8 +3,10 @@ from venv import create
 import psycopg2, os
 from configparser import ConfigParser
 
-config = ConfigParser(os.environ)
-config.read('coupon/config.ini')
+config_file = os.path.join(os.path.dirname(__file__), 'config.ini')
+print(config_file)
+coupon_config = ConfigParser()
+coupon_config.read(config_file)
 
 
 def database_schema_setup():

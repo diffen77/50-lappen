@@ -2,13 +2,13 @@ from ast import While
 from cgitb import text
 import datetime
 import urllib.request
-import json, psycopg2
+import json, psycopg2, os
 from xmlrpc.client import DateTime
 from database_schema import database_schema_setup
 from flatten_json import flatten
-from configparser import ConfigParser
+from configparser import SafeConfigParser
 
-config = ConfigParser()
+config = SafeConfigParser(os.environ)
 config.read('coupon/config.ini')
 
 #Create database schema in PostGres

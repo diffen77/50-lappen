@@ -1,8 +1,8 @@
 from venv import create
-import psycopg2
-from configparser import ConfigParser
+import psycopg2, os
+from configparser import SafeConfigParser
 
-config = ConfigParser()
+config = SafeConfigParser(os.environ)
 config.read('coupon/config.ini')
 
 

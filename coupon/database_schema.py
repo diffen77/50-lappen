@@ -1,3 +1,4 @@
+from sys import get_coroutine_origin_tracking_depth
 from venv import create
 import psycopg2, os
 from configparser import ConfigParser
@@ -13,11 +14,18 @@ def database_schema_setup():
 
     try:
         conn = psycopg2.connect(
-            host = config['postgres']['hostname'],
-            dbname = config['postgres']['database'],
-            user = config['postgres']['username'],
-            password = config['postgres']['password'],
-            port = config['postgres']['port']
+            host = "coupon-database"
+            database = "exampledb"
+            username = "gunnar"
+            password = "gunnar"
+            port = 5432
+
+#            host = config['postgres']['hostname'],
+#            dbname = config['postgres']['database'],
+#            user = config['postgres']['username'],
+#            password = config['postgres']['password'],
+#            port = config['postgres']['port']
+        
         )
 
         cur = conn.cursor()

@@ -15,11 +15,11 @@ config.read('coupon/config.ini')
 database_schema_setup()
 
 conn = psycopg2.connect(
-    host = config['postgres']['hostname'],
-    dbname = config['postgres']['database'],
-    user = config['postgres']['username'],
-    password = config['postgres']['password'],
-    port = config['postgres']['port']
+    host = "coupon-database",
+    database = "exampledb",
+    username = "gunnar",
+    password = "gunnar",
+    port = 5432
 )
 cur = conn.cursor()
 

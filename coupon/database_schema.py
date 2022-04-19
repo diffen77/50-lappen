@@ -8,9 +8,10 @@ print(config_file)
 coupon_config = ConfigParser()
 coupon_config.read(config_file)
 
-satan = input("SVen:")
+print(os.path.exists(config_file))
+print(os.path.isfile(config_file))
 
-print(satan)
+
 def database_schema_setup():
         
     conn = None

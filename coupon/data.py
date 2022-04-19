@@ -11,7 +11,7 @@ from configparser import SafeConfigParser
 config = SafeConfigParser(os.environ)
 config.read('coupon/config.ini')
 
-#Create database schema in PostGres
+#Create database schema in PostGress
 database_schema_setup()
 
 conn = psycopg2.connect(

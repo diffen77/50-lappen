@@ -1,23 +1,34 @@
 from ast import While
 from cgitb import text
+import datetime
 import urllib.request
-import json, sqlite3
+import json, psycopg2
+from xmlrpc.client import DateTime
+from database_schema import database_schema_setup
 from flatten_json import flatten
+from configparser import ConfigParser
 
-conn = sqlite3.connect('coupon.db')
+config = ConfigParser()
+config.read('coupon/config.ini')
+
+#Create database schema in PostGres
+database_schema_setup()
+
+conn = psycopg2.connect(
+    host = config['postgres']['hostname'],
+    dbname = config['postgres']['database'],
+    user = config['postgres']['username'],
+    password = config['postgres']['password'],
+    port = config['postgres']['port']
+)
 cur = conn.cursor()
 
-cur.execute('''CREATE TABLE IF NOT EXISTS coupons
-    (couponId int, regCloseTime DateTime, matchNumber int, homeTeam string, awayTeam string)''')
 
 urlData = "https://api.www.svenskaspel.se/draw/stryktipset/draws"
 
 operUrl = urllib.request.urlopen(urlData)
-
 data = operUrl.read()
-
 jsonData = json.loads(data)
-
 jsonData = flatten(jsonData)
 
 i = 0
@@ -38,9 +49,9 @@ while i < 13:
     failcheck = cur.fetchall()
 
     if len(failcheck) == 0:
-        insertQuery = "INSERT INTO coupons VALUES ('" + str(couponId) + "', '" + str(regCloseTime) + "', '" + str(matchNumber) + "', '" + jsonData[homeTeam] + "', '" + jsonData[awayTeam] + "')"
+        insertQuery = "INSERT INTO coupons(couponid, regclosetime, matchnumber, hometeam, awayteam) VALUES ('" + str(couponId) + "','" + regCloseTime + "', '" + str(matchNumber) + "', '" + jsonData[homeTeam] + "', '" + jsonData[awayTeam] + "')"
 
-        cur.execute(str(insertQuery))
+        cur.execute(insertQuery)
     
         conn.commit()
 

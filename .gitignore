@@ -1,1 +1,11 @@
 docker-compose/
+
+web/database.db
+
+coupon/config.ini
+coupon/__pycache__/
+coupon/test_data.json
+
+
+coupon.db
+

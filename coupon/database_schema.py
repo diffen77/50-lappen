@@ -15,8 +15,8 @@ def database_schema_setup():
     try:
         conn = psycopg2.connect(
             host = "coupon-database",
-            database = "exampledb",
-            username = "gunnar",
+            dbname = "exampledb",
+            user = "gunnar",
             password = "gunnar",
             port = 5432
 

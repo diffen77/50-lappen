@@ -4,7 +4,7 @@ import psycopg2, os
 from configparser import ConfigParser
 
 config = ConfigParser(os.environ)
-config.read('coupon/config.ini')
+config.read('config.ini')
 
 
 def database_schema_setup():

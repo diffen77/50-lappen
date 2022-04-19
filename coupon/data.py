@@ -4,14 +4,14 @@ import datetime
 from distutils.log import error
 from logging import exception
 import urllib.request
-import json, psycopg2, os
+import json, psycopg2
 from xmlrpc.client import DateTime
 from database_schema import database_schema_setup
 from flatten_json import flatten
 from configparser import ConfigParser
 
-config = ConfigParser(os.environ)
-config.read('config.ini')
+coupon_config = ConfigParser()
+coupon_config.read("coupon/config.ini")
 
 #Create database schema in PostGress
 database_schema_setup()
@@ -19,11 +19,11 @@ database_schema_setup()
 
 
 conn = psycopg2.connect(
-    host = config['postgres']['host'],
-    dbname = config['postgres']['dbname'],
-    user = config['postgres']['user'],
-    password = config['postgres']['password'],
-    port = config['postgres']['port']
+    dbname = coupon_config['POSTGRES']['dbname'],
+    user = coupon_config['POSTGRES']['user'],
+    password = coupon_config['POSTGRES']['password'],
+    host = coupon_config["POSTGRES"]["host"],
+    port = coupon_config['POSTGRES']['port']
 )
 
 

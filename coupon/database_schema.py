@@ -4,7 +4,7 @@ import psycopg2, os
 from configparser import ConfigParser
 
 config = ConfigParser(os.environ)
-config.read('config.ini')
+config.read('coupon/config.ini')
 
 
 def database_schema_setup():
@@ -14,11 +14,11 @@ def database_schema_setup():
 
     try:
         conn = psycopg2.connect(
-            host = config['postgres']['host'],
-            dbname = config['postgres']['dbname'],
-            user = config['postgres']['user'],
-            password = config['postgres']['password'],
-            port = config['postgres']['port']
+            host = config['POSTGRES']['host'],
+            dbname = config['POSTGRES']['dbname'],
+            user = config['POSTGRES']['user'],
+            password = config['POSTGRES']['password'],
+            port = config['POSTGRES']['port']
         
         )
 

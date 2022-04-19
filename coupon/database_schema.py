@@ -8,7 +8,9 @@ print(config_file)
 coupon_config = ConfigParser()
 coupon_config.read(config_file)
 
+satan = input("SVen:")
 
+print(satan)
 def database_schema_setup():
         
     conn = None
@@ -16,11 +18,11 @@ def database_schema_setup():
 
     try:
         conn = psycopg2.connect(
-            host = config['POSTGRES']['host'],
-            dbname = config['POSTGRES']['dbname'],
-            user = config['POSTGRES']['user'],
-            password = config['POSTGRES']['password'],
-            port = config['POSTGRES']['port']
+            host = coupon_config['POSTGRES']['host'],
+            dbname = coupon_config['POSTGRES']['dbname'],
+            user = coupon_config['POSTGRES']['user'],
+            password = coupon_config['POSTGRES']['password'],
+            port = coupon_config['POSTGRES']['port']
         
         )
 

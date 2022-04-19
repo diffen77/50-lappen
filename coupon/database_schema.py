@@ -14,8 +14,6 @@ def database_schema_setup():
 
     try:
         conn = psycopg2.connect(
-
-
             host = config['postgres']['host'],
             dbname = config['postgres']['dbname'],
             user = config['postgres']['user'],

@@ -22,11 +22,11 @@ def database_schema_setup():
 
     try:
         conn = psycopg2.connect(
-            host = os.getenv(COUPON_HOST),
-            dbname = os.getenv(COUPON_DB_NAME),
-            user = os.getenv(COUPON_DB_USER),
-            password = os.getenv(COUPON_DB_PASSWORD),
-            port = os.getenv(COUPON_DB_PORT)
+            host = os.getenv('COUPON_HOST'),
+            dbname = os.getenv('COUPON_DB_NAME'),
+            user = os.getenv('COUPON_DB_USER'),
+            password = os.getenv('COUPON_DB_PASSWORD'),
+            port = os.getenv('COUPON_DB_PORT')
         )
 
 

@@ -11,65 +11,71 @@ from flatten_json import flatten
 from configparser import ConfigParser
 
 
-config_file = os.path.join(os.path.dirname(__file__), 'config.ini')
-print(config_file)
-coupon_config = ConfigParser()
-coupon_config.read(config_file)
+def coupon_database_schema_setup():
 
-#Create database schema in PostGress
-database_schema_setup()
+    config_file = os.path.join(os.path.dirname(__file__), 'config.ini')
+    print(config_file)
+    coupon_config = ConfigParser()
+    coupon_config.read(config_file)
 
-
-
-conn = psycopg2.connect(
-    host = os.getenv('COUPON_HOST'),
-    dbname = os.getenv('COUPON_DB_NAME'),
-    user = os.getenv('COUPON_DB_USER'),
-    password = os.getenv('COUPON_DB_PASSWORD'),
-    port = os.getenv('COUPON_DB_PORT')
-)
+    #Create database schema in PostGress
+    database_schema_setup()
 
 
-cur = conn.cursor()
+
+    conn = psycopg2.connect(
+        host = os.getenv('COUPON_HOST'),
+        dbname = os.getenv('COUPON_DB_NAME'),
+        user = os.getenv('COUPON_DB_USER'),
+        password = os.getenv('COUPON_DB_PASSWORD'),
+        port = os.getenv('COUPON_DB_PORT')
+    )
 
 
-urlData = "https://api.www.svenskaspel.se/draw/stryktipset/draws"
-
-operUrl = urllib.request.urlopen(urlData)
-data = operUrl.read()
-jsonData = json.loads(data)
-jsonData = flatten(jsonData)
-
-i = 0
-matchNumber = 1
-couponId = jsonData['draws_0_drawNumber']
-regCloseTime = jsonData['draws_0_regCloseTime']
+    cur = conn.cursor()
 
 
-print("Kupong ID: " + str(couponId) + ", Spelstopp: " + str(regCloseTime))
-while i < 13:
-    homeTeam = 'draws_0_drawEvents_' + str(i) + '_match_participants_0_name'
-    awayTeam = 'draws_0_drawEvents_' + str(i) + '_match_participants_1_name'
+    urlData = "https://api.www.svenskaspel.se/draw/stryktipset/draws"
 
-    selectQuery = "Select matchNumber from coupons WHERE couponID = " + str(couponId) + " AND matchNumber = " + str(matchNumber)
+    operUrl = urllib.request.urlopen(urlData)
+    data = operUrl.read()
+    jsonData = json.loads(data)
+    jsonData = flatten(jsonData)
 
-    cur.execute(selectQuery)
+    i = 0
+    matchNumber = 1
+    couponId = jsonData['draws_0_drawNumber']
+    regCloseTime = jsonData['draws_0_regCloseTime']
 
-    failcheck = cur.fetchall()
 
-    if len(failcheck) == 0:
-        insertQuery = "INSERT INTO coupons(couponid, regclosetime, matchnumber, hometeam, awayteam) VALUES ('" + str(couponId) + "','" + regCloseTime + "', '" + str(matchNumber) + "', '" + jsonData[homeTeam] + "', '" + jsonData[awayTeam] + "')"
+    print("Kupong ID: " + str(couponId) + ", Spelstopp: " + str(regCloseTime))
+    while i < 13:
+        homeTeam = 'draws_0_drawEvents_' + str(i) + '_match_participants_0_name'
+        awayTeam = 'draws_0_drawEvents_' + str(i) + '_match_participants_1_name'
 
-        cur.execute(insertQuery)
-    
-        conn.commit()
+        selectQuery = "Select matchNumber from coupons WHERE couponID = " + str(couponId) + " AND matchNumber = " + str(matchNumber)
 
-        print("Added into DB: " + str(matchNumber) + ": " + jsonData[homeTeam] + " - " + jsonData[awayTeam])
-    else:
-        print("Exists in DB: " + str(matchNumber) + ": " + jsonData[homeTeam] + " - " + jsonData[awayTeam])
-    
-    matchNumber += 1
-    i += 1
+        cur.execute(selectQuery)
 
-    #if __name__ == '__main__':
-    #    app.run()
+        failcheck = cur.fetchall()
+
+        if len(failcheck) == 0:
+            insertQuery = "INSERT INTO coupons(couponid, regclosetime, matchnumber, hometeam, awayteam) VALUES ('" + str(couponId) + "','" + regCloseTime + "', '" + str(matchNumber) + "', '" + jsonData[homeTeam] + "', '" + jsonData[awayTeam] + "')"
+
+            cur.execute(insertQuery)
+        
+            conn.commit()
+
+            print("Added into DB: " + str(matchNumber) + ": " + jsonData[homeTeam] + " - " + jsonData[awayTeam])
+        else:
+            print("Exists in DB: " + str(matchNumber) + ": " + jsonData[homeTeam] + " - " + jsonData[awayTeam])
+        
+        matchNumber += 1
+        i += 1
+
+if __name__ == '__main__':
+    try:
+        coupon_database_schema_setup()
+    except Exception as error:
+        print(error)
+        

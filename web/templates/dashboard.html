@@ -7,7 +7,22 @@
     <title>Dashboard</title>
 </head>
 <body>
-    you aare logged inj. nu har vi ändrat här.gtg
+    Veckans ra:
+    <br />
+    Sista inlämning: {{ info[0]['regclosetime'] }}
+    <table>
+        <thead>
+            <th>Matchnummer</th><th>Hemmalag</th><th></th><th>Bortalag</th>
+        </thead>
+        {% for i in info %}
+        <tr>
+            <td>{{ i['matchnumber']}}</td><td>{{ i['hometeam'] }}</td><td> - </td><td>{{ i['awayteam'] }}</td>
+        </tr>    
+        {% endfor%}
+    </table>
+
+       
+
 
     <a href="{{url_for('logout')}}">Logout</a>
 </body>

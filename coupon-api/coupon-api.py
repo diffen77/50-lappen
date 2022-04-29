@@ -38,7 +38,7 @@ def handle_items():
     with app.app_context():
         try:
 
-            cursor.execute("select * from coupons")
+            cursor.execute("select * from coupons order by matchnumber")
             result = cursor.fetchall()
 
             # [a["regclosetime"] for a in result]

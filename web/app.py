@@ -6,6 +6,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
+import json, requests, unicodedata
+
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
@@ -86,9 +88,12 @@ def logout():
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    return render_template('dashboard.html')
+    info = requests.get('http://localhost:8081/coupon')
+    info = unicodedata.normalize('NFKD', info.text).encode('ascii','ignore')
+    info = json.loads(info)
+    return render_template('dashboard.html', info=info)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=False, host="0.0.0.0", port=81)
 

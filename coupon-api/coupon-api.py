@@ -1,5 +1,6 @@
 import datetime
 import os
+import time
 from distutils.log import error
 
 import psycopg2
@@ -7,7 +8,11 @@ from flask import Flask, jsonify, request
 from psycopg2 import Error
 from psycopg2.extras import RealDictCursor
 
+app = Flask(__name__)
 
+if __name__ == "__main__":
+    time.sleep(10)
+    app.run(host="0.0.0.0")
 
 
 #conn = psycopg2.connect(
@@ -29,7 +34,7 @@ try:
 except Exception as error:
     print(error)
 
-app = Flask(__name__)
+
 
 # gunnarasdf asdf asdf
 
@@ -62,5 +67,3 @@ def handle_items():
 handle_items()
 
 
-if __name__ == "__main__":
-    app.run(debug=True)

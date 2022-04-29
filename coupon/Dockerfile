@@ -6,6 +6,4 @@ ADD /coupon /coupon/
 
 RUN pip3 install -r requirements.txt
 
-EXPOSE 5000
-
 CMD ["python", "coupon.py" ]

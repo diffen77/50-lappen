@@ -6,7 +6,6 @@ from logging import exception
 import urllib.request
 import json, psycopg2, os, time
 from xmlrpc.client import DateTime
-#from database_schema import database_schema_setup
 from flatten_json import flatten
 from configparser import ConfigParser
 
@@ -18,9 +17,6 @@ def coupon_creation():
 
     coupon_config = ConfigParser()
     coupon_config.read(config_file)
-
-    #Create database schema in PostGress
-#    database_schema_setup()
 
 
     conn = psycopg2.connect(
@@ -74,16 +70,3 @@ def coupon_creation():
         
         matchNumber += 1
         i += 1
-        
-        
-
-
-
-#if __name__ == '__main__':
-#    time.sleep(10)
-
-#    try:
-#        coupon_creation()
-#    except Exception as error:
-#        print(error)
-

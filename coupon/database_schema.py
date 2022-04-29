@@ -1,18 +1,9 @@
-#from sys import get_coroutine_origin_tracking_depth
 from venv import create
 import psycopg2, os
 from configparser import ConfigParser
 from dotenv import load_dotenv
 
 load_dotenv()
-
-config_file = os.path.join(os.path.dirname(__file__), 'config.ini')
-print(config_file)
-coupon_config = ConfigParser()
-coupon_config.read(config_file)
-
-print(os.path.exists(config_file))
-print(os.path.isfile(config_file))
 
 
 def database_schema_setup():

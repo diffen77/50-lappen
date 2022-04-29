@@ -6,4 +6,4 @@ ADD /coupon /coupon/
 
 RUN pip3 install -r requirements.txt
 
-CMD ["python", "data.py" ]
+CMD ["python", "coupon.py" ]

@@ -22,23 +22,17 @@ def coupon_creation():
     #Create database schema in PostGress
 #    database_schema_setup()
 
-    try:
-            
 
-        conn = psycopg2.connect(
-            host = os.getenv('COUPON_HOST'),
-            dbname = os.getenv('COUPON_DB_NAME'),
-            user = os.getenv('COUPON_DB_USER'),
-            password = os.getenv('COUPON_DB_PASSWORD'),
-            port = os.getenv('COUPON_DB_PORT')
-        )
+    conn = psycopg2.connect(
+        host = os.getenv('COUPON_HOST'),
+        dbname = os.getenv('COUPON_DB_NAME'),
+        user = os.getenv('COUPON_DB_USER'),
+        password = os.getenv('COUPON_DB_PASSWORD'),
+        port = os.getenv('COUPON_DB_PORT')
+    )
 
-        cur = conn.cursor()
+    cur = conn.cursor()
     
-    except Exception as error:
-        print(error)
-
-
 
     urlData = "https://api.www.svenskaspel.se/draw/stryktipset/draws"
 
@@ -60,29 +54,26 @@ def coupon_creation():
 
         selectQuery = "Select matchNumber from coupons WHERE couponID = " + str(couponId) + " AND matchNumber = " + str(matchNumber)
                 
-        try:
             
-            cur.execute(selectQuery)
-            
-            failcheck = cur.fetchall()        
-            
-            
-            if len(failcheck) == 0:
+        cur.execute(selectQuery)
+        
+        failcheck = cur.fetchall()        
+        
+        
+        if len(failcheck) == 0:
 
-                insertQuery = "INSERT INTO coupons(couponid, regclosetime, matchnumber, hometeam, awayteam) VALUES ('" + str(couponId) + "','" + regCloseTime + "', '" + str(matchNumber) + "', '" + jsonData[homeTeam] + "', '" + jsonData[awayTeam] + "')"
+            insertQuery = "INSERT INTO coupons(couponid, regclosetime, matchnumber, hometeam, awayteam) VALUES ('" + str(couponId) + "','" + regCloseTime + "', '" + str(matchNumber) + "', '" + jsonData[homeTeam] + "', '" + jsonData[awayTeam] + "')"
 
-                cur.execute(insertQuery)
-            
-                conn.commit()
+            cur.execute(insertQuery)
+        
+            conn.commit()
 
-                print("Added into DB: " + str(matchNumber) + ": " + jsonData[homeTeam] + " - " + jsonData[awayTeam])
-            else:
-                print("Exists in DB: " + str(matchNumber) + ": " + jsonData[homeTeam] + " - " + jsonData[awayTeam])
-            
-            matchNumber += 1
-            i += 1
-        except Exception as error:
-            print(error)
+            print("Added into DB: " + str(matchNumber) + ": " + jsonData[homeTeam] + " - " + jsonData[awayTeam])
+        else:
+            print("Exists in DB: " + str(matchNumber) + ": " + jsonData[homeTeam] + " - " + jsonData[awayTeam])
+        
+        matchNumber += 1
+        i += 1
         
         
 

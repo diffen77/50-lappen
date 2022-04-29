@@ -11,7 +11,7 @@ from psycopg2.extras import RealDictCursor
 app = Flask(__name__)
 
 if __name__ == "__main__":
-    time.sleep(10)
+    #time.sleep(10)
     app.run(host="0.0.0.0")
 
 

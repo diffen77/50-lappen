@@ -6,7 +6,7 @@ ADD /web /web/
 
 RUN pip3 install -r requirements.txt
 
-EXPOSE 8082
+EXPOSE 5000
 
 
 CMD ["python", "app.py" ]

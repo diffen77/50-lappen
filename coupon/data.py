@@ -4,7 +4,7 @@ import datetime
 from distutils.log import error
 from logging import exception
 import urllib.request
-import json, psycopg2, os
+import json, psycopg2, os, time
 from xmlrpc.client import DateTime
 from database_schema import database_schema_setup
 from flatten_json import flatten
@@ -74,8 +74,10 @@ def coupon_database_schema_setup():
         i += 1
 
 if __name__ == '__main__':
+    time.sleep(10)
+
     try:
         coupon_database_schema_setup()
     except Exception as error:
         print(error)
-        
+

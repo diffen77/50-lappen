@@ -10,17 +10,8 @@ from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 
-if __name__ == "__main__":
-    #time.sleep(10)
-    app.run(host="0.0.0.0")
-
-
-#conn = psycopg2.connect(
-#    user="gunnar", password="gunnar", host="localhost", port="5432", database="50-lappen"
-#)
-
 try:
-        
+    
     conn = psycopg2.connect(
         host = os.getenv('COUPON_HOST'),
         dbname = os.getenv('COUPON_DB_NAME'),
@@ -34,36 +25,39 @@ try:
 except Exception as error:
     print(error)
 
+    
+#conn = psycopg2.connect(
+#    user="gunnar", password="gunnar", host="localhost", port="5432", database="50-lappen"
+#)
 
 
-# gunnarasdf asdf asdf
-
-
-# asdfd fa asdf
 
 
 @app.route("/coupon", methods=["GET"])
 def handle_items():
-    try:
+    with app.app_context():
+        try:
 
-        cursor.execute("select * from coupons")
-        result = cursor.fetchall()
+            cursor.execute("select * from coupons")
+            result = cursor.fetchall()
 
-        # [a["regclosetime"] for a in result]
+            # [a["regclosetime"] for a in result]
 
-        # result = [datetime(result.regclosetime).isoformat() for result.regclosetime in result]'
+            # result = [datetime(result.regclosetime).isoformat() for result.regclosetime in result]'
 
-        for res in result:
-            res["regclosetime"] = res["regclosetime"].isoformat()
+            for res in result:
+                res["regclosetime"] = res["regclosetime"].isoformat()
 
-        print(result)
+            print(result)
 
-        return jsonify(result)
+            return jsonify(result)
 
-    except Exception as error:
-        return error
-
-
-handle_items()
+        except Exception as error:
+            print(error)
 
 
+
+if __name__ == "__main__":
+    #time.sleep(10)
+    handle_items()
+    app.run(host="0.0.0.0")

@@ -1,10 +1,9 @@
 # Betting
 To run the solution:
 
-Docker-compose.yaml
+# Docker-compose.yaml
 version: "3"
 services:
-# PostgreSQL database for coupon data.
     coupon-database:
         image: postgres
         restart: always
@@ -20,7 +19,6 @@ services:
         volumes:
             - change me:/var/lib/postgresql/data
 
-# Administrative container just for troubleshooting. Not needed.
     adminer:
         image: adminer
         restart: always
@@ -29,7 +27,6 @@ services:
         ports:
             - 8080:8080
 
-# Creates weekly coupon
     coupon-manager:
         image: diffen/50-lappen-coupon
         #restart: on-failure[:3]
@@ -43,7 +40,6 @@ services:
             - COUPON_HOST=coupon-database
             - COUPON_DB_PORT=5432
 
-# Container that presents coupon data from the PostgreSQL 
     coupon-manager-api:
         image: diffen/50-lappen-coupon-api
         #restart: on-failure[:3]
@@ -60,7 +56,6 @@ services:
         ports:
             - 8081:8081
 
-# Main web application
     50-lappen:
         image: diffen/50-lappen
         #restart: on-failure[:3]

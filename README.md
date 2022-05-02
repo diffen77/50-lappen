@@ -2,6 +2,7 @@
 To run the solution:
 
 # Docker-compose.yaml
+
 version: "3"
 services:
     coupon-database:

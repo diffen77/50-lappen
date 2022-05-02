@@ -2,10 +2,8 @@
 To run the solution:
 
 # Docker-compose.yaml
-
-
+```yaml
 services:
-
     coupon-database:
         image: postgres
         restart: always

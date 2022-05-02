@@ -1,7 +1,7 @@
 # Betting
 To run the solution:
 
-# Docker-compose.yaml
+Docker-compose.yaml
 
 version: "3"
 services:

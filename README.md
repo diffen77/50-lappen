@@ -5,6 +5,7 @@ To run the solution:
 
 
 services:
+
     coupon-database:
         image: postgres
         restart: always

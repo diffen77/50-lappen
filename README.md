@@ -29,8 +29,6 @@ services:
 
     coupon-manager:
         image: diffen/50-lappen-coupon
-        #restart: on-failure[:3]
-        #restart: always
         depends_on: 
             - coupon-database
         environment:
@@ -42,8 +40,6 @@ services:
 
     coupon-manager-api:
         image: diffen/50-lappen-coupon-api
-        #restart: on-failure[:3]
-        #restart: always
         container_name: coupon-manager-api
         depends_on: 
             - coupon-manager
@@ -58,8 +54,6 @@ services:
 
     50-lappen:
         image: diffen/50-lappen
-        #restart: on-failure[:3]
-        #restart: always
         container_name: 50-lappen
         depends_on: 
             - coupon-database

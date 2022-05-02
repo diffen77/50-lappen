@@ -3,9 +3,7 @@ To run the solution:
 
 # Docker-compose.yaml
 
-asdf
 
-version: "3"
 services:
     coupon-database:
         image: postgres

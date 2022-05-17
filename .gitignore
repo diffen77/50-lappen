@@ -3,6 +3,7 @@ docker-compose/
 web/database.db
 web/client_secrets.json
 
+
 coupon/config.ini
 coupon/__pycache__/
 coupon/test_data.json

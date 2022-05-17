@@ -8,7 +8,6 @@ from pip._vendor import cachecontrol
 
 
 app = Flask(__name__)
-#app.secret_key = "diffen.nu"
 app.secret_key = os.getenv('APP_SECRET_KEY')
 
 # remove sauce

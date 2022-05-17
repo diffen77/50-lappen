@@ -38,7 +38,7 @@ def handle_items():
     with app.app_context():
         try:
 
-            cursor.execute("select * from coupons order by matchnumber")
+            cursor.execute("select * from coupons where regclosetime = (SELECT MAX(regclosetime) FROM coupons)")
             result = cursor.fetchall()
 
             # [a["regclosetime"] for a in result]

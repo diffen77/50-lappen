@@ -9,7 +9,7 @@ from pip._vendor import cachecontrol
 
 app = Flask(__name__)
 #app.secret_key = "diffen.nu"
-app.secret_key = os.getenv('app.secret_key')
+app.secret_key = os.getenv('APP_SECRET_KEY')
 
 # remove sauce
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"

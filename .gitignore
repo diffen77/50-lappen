@@ -1,6 +1,7 @@
 docker-compose/
 
 web/database.db
+web/client_secret.json
 
 coupon/config.ini
 coupon/__pycache__/

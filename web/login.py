@@ -60,7 +60,7 @@ def callback():
         audience = GOOGLE_CLIENT_ID
     )
 
-    info = requests.get('http://localhost:8081/coupon')
+    info = requests.get('http://coupon-manager-api:8081/coupon')
     info = unicodedata.normalize('NFKD', info.text).encode('ascii','ignore')
     info = json.loads(info)
 

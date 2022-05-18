@@ -11,7 +11,7 @@ coupon/test_data.json
 
 .env
 docker-compose.yaml
-
+client_secrets.json
 
 
 coupon.db

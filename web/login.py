@@ -1,74 +1,55 @@
-import requests,unicodedata,json
-from flask import Flask, session, abort, redirect, request, render_template
-from google_auth_oauthlib.flow import Flow
-from google.oauth2 import id_token
-import os, pathlib
-import google.auth.transport.requests
-from pip._vendor import cachecontrol
+from datetime import timedelta
+import unicodedata,json, requests
+from flask import Flask, session, abort, redirect, request, render_template, url_for
+from authlib.integrations.flask_client import OAuth
+import os
+
 
 
 app = Flask(__name__)
-#app.secret_key = os.getenv('APP_SECRET_KEY')
-app.secret_key = "test.nu"
+app.secret_key = os.getenv('APP_SECRET_KEY')
 
-# remove sauce
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+app.config['SESSION_COOKIE_NAME'] = 'sventa'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
-client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secrets.json")
+CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
 
-flow = Flow.from_client_secrets_file(
-    client_secrets_file=client_secrets_file,
-    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri = "http://localhost:8082/callback"
-    )
-
-def login_is_required(function):
-    def wrapper(*args, **kwargs):
-        if "google_id" not in session:
-            return abort(401) # authorization required
-        else:
-            return function()
-    
-    return wrapper
-
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id='506150050561-cdeadtrd8sogc0bk1rjdjsgvjcusopkf.apps.googleusercontent.com',
+    client_secret='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',
+    server_metadata_url=CONF_URL,
+    client_kwargs={'scope': 'openid profile email'}
+)
 
 
 @app.route("/login")
 def login():
-    authorization_url, state = flow.authorization_url()
-    session["state"] = state
-    return redirect(authorization_url)
+    google = oauth.create_client('google')
+    redirect_uri = url_for('callback', _external=True)
+    return google.authorize_redirect(redirect_uri)
 
 
 @app.route("/callback")
 def callback():
-    flow.fetch_token(authorization_response=request.url)
+    token = oauth.google.authorize_access_token()
+    user = token.get('userinfo')
+
+    if user:
+        session['user'] = user 
 
 
-    if not session["state"] == request.args["state"]:
-        abort(500)
 
-    credentials = flow.credentials
-    request_session = requests.session()
-    cached_session = cachecontrol.CacheControl(request_session)
-    token_request = google.auth.transport.requests.Request(session=cached_session)
+    return redirect("/dashboard")
 
-    id_info = id_token.verify_oauth2_token(
-        id_token = credentials._id_token,
-        request = token_request,
-        audience = GOOGLE_CLIENT_ID
-    )
-
-    info = requests.get('http://coupon-manager-api:8081/coupon')
-    info = unicodedata.normalize('NFKD', info.text).encode('ascii','ignore')
-    info = json.loads(info)
-
-    return render_template('dashboard.html', info=info)
+    
 
 @app.route("/logout")
 def logout():
-    session.clear()
+    for key in list(session.keys()):
+        session.pop(key)
+
     return redirect("/")
 
 @app.route("/")
@@ -76,10 +57,20 @@ def index():
     return "logga in <a href='/login'>logga in</a>"
 
 @app.route("/dashboard")
-@login_is_required
+#@login_is_required
 def dashboard():
-    return "Dashboard <a href='/logout'>logga ut</a>"
+    email = dict(session).get('email', None)
+    #return f"Hello, {email} <br><a href='/logout'>logga ut</a>"
+
+
+    #session['email'] = user['email']
+    #session.permanent = True
+    info = requests.get('http://coupon-manager-api:8081/coupon')
+    info = unicodedata.normalize('NFKD', info.text).encode('ascii','ignore')
+    info = json.loads(info)
+    return render_template('dashboard.html', info=info,email=email)
+    #return "Dashboard <a href='/logout'>logga ut</a>"
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0",port=5000)
+    app.run(debug=False, host="0.0.0.0",port=5000)

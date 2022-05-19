@@ -2,6 +2,7 @@ from datetime import timedelta
 import unicodedata,json, requests
 from flask import Flask, session, abort, redirect, request, render_template, url_for
 from authlib.integrations.flask_client import OAuth
+from auth_decorator import login_required
 import os
 
 
@@ -35,11 +36,13 @@ def login():
 def callback():
     token = oauth.google.authorize_access_token()
     user = token.get('userinfo')
+    
+    
+    session['profile'] = google.userinfo()
+    session.permanent = True
 
     if user:
         session['user'] = user 
-
-
 
     return redirect("/dashboard")
 
@@ -57,7 +60,7 @@ def index():
     return "logga in <a href='/login'>logga in</a>"
 
 @app.route("/dashboard")
-#@login_is_required
+#@login_required
 def dashboard():
     email = dict(session).get('email', None)
     #return f"Hello, {email} <br><a href='/logout'>logga ut</a>"

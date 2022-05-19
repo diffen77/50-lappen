@@ -52,6 +52,11 @@ def handle_items():
             print(error)
 
 
+@app.route("/user_coupon", methods=["POST"])
+def add_user_coupon():
+    test = request.json['test']
+
+
 
 if __name__ == "__main__":
     time.sleep(10)

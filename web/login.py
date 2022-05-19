@@ -69,7 +69,7 @@ def dashboard():
 
     #session['email'] = user['email']
     #session.permanent = True
-    info = requests.get('http://localhost:8081/coupon')
+    info = requests.get(os.getenv('COUPON_API')+'/coupon')
     info = unicodedata.normalize('NFKD', info.text).encode('ascii','ignore')
     info = json.loads(info)
     return render_template('dashboard.html', info=info,user=user)

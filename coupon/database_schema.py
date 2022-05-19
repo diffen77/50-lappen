@@ -60,7 +60,7 @@ def database_schema_setup():
         create_script = '''CREATE TABLE "member_coupons" (
             "id" serial NOT NULL,
             PRIMARY KEY ("id"),
-            "user_id" character varying NOT NULL,
+            "user_email" character varying NOT NULL,
             "1" boolean NULL DEFAULT NULL,
             "x" boolean NULL DEFAULT NULL,
             "2" boolean NULL DEFAULT NULL)'''

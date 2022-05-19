@@ -25,10 +25,6 @@ try:
 except Exception as error:
     print(error)
 
-    
-#conn = psycopg2.connect(
-#    user="gunnar", password="gunnar", host="localhost", port="5432", database="50-lappen"
-#)
 
 
 

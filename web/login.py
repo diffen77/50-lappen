@@ -60,9 +60,10 @@ def index():
     return "logga in <a href='/login'>logga in</a>"
 
 @app.route("/dashboard")
-#@login_required
+@login_required
 def dashboard():
-    email = dict(session).get('email', None)
+    user = dict(session).get('profile', None)
+    email = user['email']
     #return f"Hello, {email} <br><a href='/logout'>logga ut</a>"
 
 
@@ -71,7 +72,7 @@ def dashboard():
     info = requests.get('http://localhost:8081/coupon')
     info = unicodedata.normalize('NFKD', info.text).encode('ascii','ignore')
     info = json.loads(info)
-    return render_template('dashboard.html', info=info,email=email)
+    return render_template('dashboard.html', info=info,user=user)
     #return "Dashboard <a href='/logout'>logga ut</a>"
 
 

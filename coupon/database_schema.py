@@ -61,9 +61,10 @@ def database_schema_setup():
             "id" serial NOT NULL,
             PRIMARY KEY ("id"),
             "user_email" character varying NOT NULL,
-            "1" boolean NULL DEFAULT NULL,
-            "x" boolean NULL DEFAULT NULL,
-            "2" boolean NULL DEFAULT NULL)'''
+            "coupons_id" int NOT NULL,
+            "1" boolean NULL DEFAULT False,
+            "x" boolean NULL DEFAULT False,
+            "2" boolean NULL DEFAULT False)'''
 
         cur.execute(create_script)
         conn.commit()

@@ -54,11 +54,15 @@ def handle_items():
 
 @app.route("/user_coupon", methods=["POST"])
 def add_user_coupon():
-    test = request.json['test']
+    data = request.form
+
+    return data
+
+
 
 
 
 if __name__ == "__main__":
     time.sleep(10)
     handle_items()
-    app.run(debug=True, host="0.0.0.0", port=8081)
+    app.run(debug=False, host="0.0.0.0", port=8081)

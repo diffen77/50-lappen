@@ -13,6 +13,7 @@ coupon/test_data.json
 
 .env
 docker-compose.yaml
+docker-compose-static.yaml
 client_secrets.json
 
 
